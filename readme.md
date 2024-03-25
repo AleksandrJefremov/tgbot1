@@ -14,4 +14,4 @@ put your tg bot token in ".env.example"
 
 rename ".env.example" to ".env"
 
-`python telebot.py`
+Run bot `python telebot.py`
