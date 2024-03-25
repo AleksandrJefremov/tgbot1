@@ -11,26 +11,25 @@ load_dotenv()
 
 BOT_TOKEN = str(os.environ.get('BOT_TOKEN'))
 
-# Enable logging
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
-# set higher logging level for httpx to avoid all GET and POST requests being logged
+
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context.
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /start is issued."""
+    
     user = update.effective_user
-    await update.message.reply_html(
-        rf"Hi {user.mention_html()}!",
-        reply_markup=ForceReply(selective=True),
-    )
-    await update.message.reply_text(generate("Tell me about yourself DO NOT MENTION THE MONEY AND THE KITTENS"))
+    
+    await update.message.reply_html(generate(f"Greet the user '{user.first_name}'. Make sure to use users nickname ('{user.first_name}'). Introduce yourself as Llama2 ai assistant and in short explain what you are capable off"))
+    global messages
+    messages = [
+    {'role': 'user', 'content': " "},
+    ]
 
 
 
@@ -76,18 +75,18 @@ def generate(prompt):
 
 def main() -> None:
     """Start the bot."""
-    # Create the Application and pass it your bot's token.
+
     application = Application.builder().token(BOT_TOKEN).build()
 
-    # on different commands - answer in Telegram
+
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("clear", clear_command))
     application.add_handler(CommandHandler("hist", hist_command))
 
-    # on non command i.e message - echo the message on Telegram
+
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
-    # Run the bot until the user presses Ctrl-C
+
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
