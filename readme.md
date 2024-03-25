@@ -1,3 +1,5 @@
+<h1>Telegram bot for ollama LLMs</h1>
+
 Download and install ollama: https://ollama.com/download
 
 `ollama run llama2-uncensored`
@@ -12,4 +14,4 @@ put your tg bot token in ".env.example"
 
 rename ".env.example" to ".env"
 
-`python telebot.py`
+Run bot `python telebot.py`
